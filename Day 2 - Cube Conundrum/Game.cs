@@ -15,7 +15,7 @@ namespace Day_2___Cube_Conundrum
         public Game(string initLine)
         {
             this.Samples = new List<Sample>();
-            this.ParseGameLine(initLine);
+            this.ParseGameInfo(initLine);
         }
 
         public bool IsValid()
@@ -32,12 +32,28 @@ namespace Day_2___Cube_Conundrum
             return result;
         }
 
-        private void ParseGameLine(string line)
+        private void ParseGameInfo(string line)
         {
+            string[] splits = line.Split(": ");
+            string[] gameInfo = splits[0].Split(' ');
+            this.ID = int.Parse(gameInfo[1]);
 
+            ParseGamesLine(splits[1]);
         }
 
+        private void ParseGamesLine(string line)
+        {
+            string[] games = line.Split("; ");
+            foreach (string sampleInfo in games)
+            {
+                ParseSampleInfo(sampleInfo);
+            }
+        }
 
-
+        private void ParseSampleInfo(string info)
+        {
+            Sample sample = Sample.ParseLine(info);
+            this.Samples.Add(sample);
+        }
     }
 }

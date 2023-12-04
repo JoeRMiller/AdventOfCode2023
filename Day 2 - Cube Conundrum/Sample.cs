@@ -26,7 +26,25 @@ namespace Day_2___Cube_Conundrum
         public static Sample ParseLine(string line)
         {
             Sample sample = new Sample();
-
+            string[] details = line.Split(", ");
+            foreach (string sampleInfo in details)
+            {
+                string[] sampleData = sampleInfo.Split(' ');
+                var count = int.Parse(sampleData[0]);
+                switch (sampleData[1])
+                {
+                    case "red":
+                        sample.Red = count;
+                        break;
+                    case "green":
+                        sample.Green = count;
+                        break;
+                    case "blue":
+                        sample.Blue = count;
+                        break;
+                }
+            }
+            
             return sample;
         }
         public bool IsValid()
