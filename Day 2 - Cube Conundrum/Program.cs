@@ -5,14 +5,13 @@ Console.WriteLine("Advent of Code Day 2 - Cube Conundrum");
 
 var input = File.OpenText("..\\..\\..\\input.txt");
 
-int total = 0;
+int totalPower = 0;
 string? line;
 while ((line = input.ReadLine()) != null)
 {
     Game game = new Game(line);
-    if (game.IsValid())
-    {
-        total += game.ID;
-    }
+    var power = game.GetGamePower();
+    Console.WriteLine($"Power: {power}");
+    totalPower += power;
 }
-Console.WriteLine($"Sum of Game IDs: {total}");
+Console.WriteLine($"Total Game Power: {totalPower}");
