@@ -69,12 +69,7 @@ namespace Day_4___Scratchcards
                 }
             }
             this.Wins = hits;
-            //Console.Write($"CARD: {this.CardNumber} has {hits} wins");
-            if (this.Wins == 0)
-            {
-                //Console.Write("***********");
-            }
-            //Console.Write('\n');
+
             return value;
         }
     }
