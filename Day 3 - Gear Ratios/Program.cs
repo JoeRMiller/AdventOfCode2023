@@ -1,25 +1,18 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.InteropServices.Marshalling;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 Console.WriteLine("Advent of Code Day 3 - Gear Ratios");
 
-//HashSet<PartLocation> partLocations = new();
-SortedSet<PartLocation> partLocations = new();
-int globalCount = 0;
-
 var input = File.OpenText("..\\..\\..\\input.txt");
 
-int arrayLength = 140;
+int ARRAYLENGTH = 140;
 
-int partsSum = 0;
+
 int lineNumber = 0;
-Char[][] schematic = new Char[arrayLength][];
-bool[][] partMap = new bool[arrayLength][];
-bool[][] gearMap = new bool[arrayLength][];
+Char[][] schematic = new Char[ARRAYLENGTH][];
+bool[][] partMap = new bool[ARRAYLENGTH][];
+bool[][] gearMap = new bool[ARRAYLENGTH][];
+int ratioTotal = 0;
 
 //Read input, create schematic and symbol map arrays
 string? line;
@@ -27,13 +20,13 @@ while ((line = input.ReadLine()) != null)
 {
     char[] mapLine = line.ToCharArray();
     schematic[lineNumber] = mapLine;
-    partMap[lineNumber] = new bool[arrayLength];
-    gearMap[lineNumber] = new bool[arrayLength];
+    partMap[lineNumber] = new bool[ARRAYLENGTH];
+    gearMap[lineNumber] = new bool[ARRAYLENGTH];
     
     for (int i = 0;  i < mapLine.Length; i++)
     {
         //if ((!Char.IsDigit(mapLine[i]) && (mapLine[i] != '.')))
-        if (matchPart(mapLine[i]))
+        if (MatchPart(mapLine[i]))
         {
             partMap[lineNumber][i] = true;
         }
@@ -43,7 +36,7 @@ while ((line = input.ReadLine()) != null)
         }
 
         //if (mapLine[i] == '*')
-        if (matchGear(mapLine[i]))
+        if (MatchGear(mapLine[i]))
         {
             gearMap[lineNumber][i] = true;
         }
@@ -55,20 +48,20 @@ while ((line = input.ReadLine()) != null)
     lineNumber++;
 }
 
-partLocations = ProcessMapForParts();
+SortedSet<PartLocation> partLocations = ProcessMapForParts(partMap, MatchType.Parts);
+SortedSet<PartLocation> gearLocations = ProcessMapForParts(gearMap, MatchType.Gears);
 
+int partsSum = 0;
 foreach (PartLocation part in partLocations)
 {
-    Console.WriteLine($"Found Part: {part}");
+    //Console.WriteLine($"Found Part: {part}");
     partsSum += part.PartNumber;
 }
 
+Console.WriteLine($"Parts Sum: {partsSum}");
+Console.WriteLine($"Gears Sum: {ratioTotal}");
 
-Console.WriteLine($"Global Count: {globalCount}");
-Console.WriteLine($"HashSet Count: {partLocations.Count}");
-Console.WriteLine($"Parts Sum: {partsSum}"); //357407
-
-bool matchPart(char chr)
+bool MatchPart(char chr)
 {
     bool result = false;
 
@@ -80,7 +73,7 @@ bool matchPart(char chr)
     return result;
 }
 
-bool matchGear(char chr)
+bool MatchGear(char chr)
 {
     bool result = false;
 
@@ -92,81 +85,60 @@ bool matchGear(char chr)
     return result;
 }
 
-void ProcessMapForGears()
-{
-    void ProcessMapForParts()
-    {
-        //read symbol map, and identify surrounding digits
-        for (int row = 0; row < arrayLength; row++)
-        {
-            for (int col = 0; col < arrayLength; col++)
-            {
-                if (partMap[row][col] == true)
-                {
-                    //found a symbol, check surrounding 9 locations
-
-                    //above row locations
-                    if (row > 0)
-                    {
-                        FindParts(row - 1, col);
-                        FindParts(row - 1, col + 1);
-                        FindParts(row - 1, col + 2);
-                    }
-
-                    //same row locations
-                    FindParts(row, col);
-                    FindParts(row, col + 2);
-
-                    //lower row locations
-                    if (row < arrayLength)
-                    {
-                        FindParts(row + 1, col);
-                        FindParts(row + 1, col + 1);
-                        FindParts(row + 1, col + 2);
-                    }
-                }
-            }
-        }
-    }
-}
-SortedSet<PartLocation>  ProcessMapForParts(bool[][] map)
+SortedSet<PartLocation> ProcessMapForParts(bool[][] map, MatchType matchType)
 {
     SortedSet<PartLocation> locations = new();
     //read symbol map, and identify surrounding digits
-    for (int row = 0; row < arrayLength; row++)
+    for (int row = 0; row < ARRAYLENGTH; row++)
     {
-        for (int col = 0; col < arrayLength; col++)
+        for (int col = 0; col < ARRAYLENGTH; col++)
         {
-            if (partMap[row][col] == true)
+            SortedSet<PartLocation> tempLocations = new();
+            if (map[row][col] == true)
             {
                 //found a symbol, check surrounding 9 locations
-                //PartLocation? location;
                 //above row locations
                 if (row > 0)
                 {
-                    //location = FindParts(row - 1, col);
-                    //location = FindParts(row - 1, col + 1);
-                    //location = FindParts(row - 1, col + 2);
-                    AddLocation(FindParts(row - 1, col), ref locations);
-                    AddLocation(FindParts(row - 1, col + 1), ref locations);
-                    AddLocation(FindParts(row - 1, col + 2), ref locations);
+                    AddLocation(FindParts(row - 1, col), ref tempLocations);
+                    AddLocation(FindParts(row - 1, col + 1), ref tempLocations);
+                    AddLocation(FindParts(row - 1, col + 2), ref tempLocations);
                 }
 
                 //same row locations
-                //location = FindParts(row, col);
-                //location = FindParts(row, col + 2);
-                AddLocation(FindParts(row, col), ref locations);
-                AddLocation(FindParts(row, col + 2), ref locations);
+                AddLocation(FindParts(row, col), ref tempLocations);
+                AddLocation(FindParts(row, col + 2), ref tempLocations);
 
                 //lower row locations
-                if (row < arrayLength)
+                if (row < ARRAYLENGTH)
                 {
-                    //location = FindParts(row + 1, col);
-                    //location = FindParts(row + 1, col + 1);
-                    //location = FindParts(row + 1, col + 2);
-                    AddLocation(FindParts(row + 1, col), ref locations);
-                    AddLocation(FindParts(row + 1, col + 1), ref locations);
-                    AddLocation(FindParts(row + 1, col + 2), ref locations);
+                    AddLocation(FindParts(row + 1, col), ref tempLocations);
+                    AddLocation(FindParts(row + 1, col + 1), ref tempLocations);
+                    AddLocation(FindParts(row + 1, col + 2), ref tempLocations);
+                }
+                switch (matchType)
+                {
+                    case MatchType.Parts:
+                        //add all locations found
+                        foreach (PartLocation location in tempLocations)
+                        {
+                            locations.Add(location);
+                        }
+                        break;
+
+                    case MatchType.Gears:
+                        //only add if exactly two parts found
+                        if (tempLocations.Count == 2)
+                        {
+                            int ratio = 1;
+                            foreach (PartLocation location in tempLocations)
+                            {
+                                locations.Add(location);
+                                ratio = ratio * location.PartNumber;
+                            }
+                            ratioTotal += ratio;
+                        }
+                        break;
                 }
             }
         }
@@ -214,7 +186,7 @@ PartLocation? FindParts(int row, int col)
             //Now look forward for the end
             currentCol = lastCol;
             foundDigit = true;
-            while (foundDigit && (currentCol < arrayLength))
+            while (foundDigit && (currentCol < ARRAYLENGTH))
             {
                 chr = schematic[row][currentCol];
                 if (Char.IsDigit(chr))
@@ -236,9 +208,7 @@ PartLocation? FindParts(int row, int col)
             int partNumber = int.Parse(sb.ToString());
 
             PartLocation location = new PartLocation(firstCol, lastCol, row, partNumber);
-            //partLocations.Add(location);
             return location;
-            //globalCount++;
         }
     }
     return null;
@@ -251,6 +221,7 @@ struct PartLocation : IComparable
     public int Row { get; }
     public int PartNumber {  get; }
     public int Order { get; }
+    public int Ratio { get; }
 
     public PartLocation(int startCol, int endCol, int row, int partNumber)
     {
@@ -268,7 +239,7 @@ struct PartLocation : IComparable
 
     public override int GetHashCode()
     {
-        return (1000000 * Row) + (1000 * StartCol) + EndCol;//xxx-xxx-xxx
+        return (1000000 * Row) + (1000 * StartCol) + EndCol;
     }
 
     public int CompareTo(object? obj)
@@ -281,4 +252,10 @@ struct PartLocation : IComparable
         }
         return 0;
     }
+}
+
+enum MatchType
+{
+    Parts,
+    Gears
 }
