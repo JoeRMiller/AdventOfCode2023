@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day 3 - Gear Ratios", "Day 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day 4 - Scratchcards", "Day 4 - Scratchcards\Day 4 - Scratchcards.csproj", "{7C592ADD-1E58-4A78-BE29-9B8827977BCC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day 5 - Seed Maps", "Day 5 - Seed Maps\Day 5 - Seed Maps.csproj", "{32837901-C2AF-4E15-9AE8-8B8D601F0DCF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{7C592ADD-1E58-4A78-BE29-9B8827977BCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C592ADD-1E58-4A78-BE29-9B8827977BCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C592ADD-1E58-4A78-BE29-9B8827977BCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32837901-C2AF-4E15-9AE8-8B8D601F0DCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32837901-C2AF-4E15-9AE8-8B8D601F0DCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32837901-C2AF-4E15-9AE8-8B8D601F0DCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32837901-C2AF-4E15-9AE8-8B8D601F0DCF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
