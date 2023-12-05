@@ -11,6 +11,8 @@ namespace Day_4___Scratchcards
         public List<int> Winners {  get; }
         public List<int> Numbers { get; }
 
+        public int Wins { get; private set; }
+
         public int CardNumber { get; }
 
         private static char[] _separator = { ':', '|' };
@@ -49,6 +51,7 @@ namespace Day_4___Scratchcards
 
         public int GetValue()
         {
+            var hits = 0;
             var value = 0;
             foreach (int number in this.Numbers)
             {
@@ -62,8 +65,16 @@ namespace Day_4___Scratchcards
                     {
                         value *= 2;
                     }
+                    hits++;
                 }
             }
+            this.Wins = hits;
+            //Console.Write($"CARD: {this.CardNumber} has {hits} wins");
+            if (this.Wins == 0)
+            {
+                //Console.Write("***********");
+            }
+            //Console.Write('\n');
             return value;
         }
     }
