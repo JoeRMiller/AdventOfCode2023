@@ -8,11 +8,34 @@ Console.WriteLine("Day 6 - Wait For It");
 var watch = Stopwatch.StartNew();
 var input = Utility.ReadProjectFile("input.txt");
 List<Race> races = RaceFactory.CreateRaces(input);
+var productTotal = 1;
+
+foreach (Race race in races)
+{
+    var time = race.Time;
+    var distance = race.Distance;
+    var wins = 0;
+    for (int i = 1; i < time; i++)
+    {
+        var timeLeft = time - i;
+        var travel = timeLeft * i;
+        if (travel > distance)
+        {
+            //This wait time beat the current best. 
+            wins++;
+        }
+        if ((wins > 0) && (travel < distance))
+        {
+            //Losing distance, quit checking
+            break;
+        }
+    }
+    productTotal *= wins;
+}
 
 
 
-
-var result = 0;
+var result = productTotal;
 watch.Stop();
 Console.WriteLine($"Ways to win product: {result}");
 Console.WriteLine($"Time: {watch.ElapsedMilliseconds}");
