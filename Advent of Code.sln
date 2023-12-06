@@ -3,15 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Advent of Code Day 1 - Trebuchet", "Advent of Code Day 1A - Trebuchet\Advent of Code Day 1 - Trebuchet.csproj", "{B7695CF1-92ED-489B-8807-D8AB5884ABD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day 1 - Trebuchet", "Advent of Code Day 1A - Trebuchet\Day 1 - Trebuchet.csproj", "{B7695CF1-92ED-489B-8807-D8AB5884ABD8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day 2 - Cube Conundrum", "Day 2 - Cube Conundrum\Day 2 - Cube Conundrum.csproj", "{2372EA8A-6BFC-485C-9E1D-F5EAD7D11D74}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day 3 - Gear Ratios", "Day 3 - Gear Ratios\Day 3 - Gear Ratios.csproj", "{AB511377-E83D-4C4A-ADA0-9D7956DF2029}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day 4 - Scratchcards", "Day 4 - Scratchcards\Day 4 - Scratchcards.csproj", "{7C592ADD-1E58-4A78-BE29-9B8827977BCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day 4 - Scratchcards", "Day 4 - Scratchcards\Day 4 - Scratchcards.csproj", "{7C592ADD-1E58-4A78-BE29-9B8827977BCC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day 5 - Seed Maps", "Day 5 - Seed Maps\Day 5 - Seed Maps.csproj", "{32837901-C2AF-4E15-9AE8-8B8D601F0DCF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day 5 - Seed Maps", "Day 5 - Seed Maps\Day 5 - Seed Maps.csproj", "{32837901-C2AF-4E15-9AE8-8B8D601F0DCF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{D7769628-9ADF-42F9-90F9-B7CBF2A2A37F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day 6 - Wait For It", "Day 6 - Wait For It\Day 6 - Wait For It.csproj", "{7ACF3A25-AC08-4AED-9A0F-BCA2D70E2885}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{32837901-C2AF-4E15-9AE8-8B8D601F0DCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32837901-C2AF-4E15-9AE8-8B8D601F0DCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32837901-C2AF-4E15-9AE8-8B8D601F0DCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7769628-9ADF-42F9-90F9-B7CBF2A2A37F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7769628-9ADF-42F9-90F9-B7CBF2A2A37F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7769628-9ADF-42F9-90F9-B7CBF2A2A37F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7769628-9ADF-42F9-90F9-B7CBF2A2A37F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ACF3A25-AC08-4AED-9A0F-BCA2D70E2885}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ACF3A25-AC08-4AED-9A0F-BCA2D70E2885}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ACF3A25-AC08-4AED-9A0F-BCA2D70E2885}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ACF3A25-AC08-4AED-9A0F-BCA2D70E2885}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
