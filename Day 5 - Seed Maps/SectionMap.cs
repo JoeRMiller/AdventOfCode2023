@@ -33,7 +33,8 @@ namespace Day_5___Seed_Maps
             for (int i = 0; i < ranges; i++) 
             { 
                 long start = this.Sources[i];
-                long end = start + this.Ranges[i];
+                long end = start + this.Ranges[i] - 1;
+                
                 if ((source >= start) && (source <= end))
                 {
                     long gap = source - start;

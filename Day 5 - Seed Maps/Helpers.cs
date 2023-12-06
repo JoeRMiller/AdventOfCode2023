@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,6 +22,22 @@ namespace Day_5___Seed_Maps
 
             return list;
         }
+
+        public static SeedMap GetSeedMap(string str)
+        {
+            SeedMap map = new();
+            string[] strArr = str.Split(' ');
+            int pairs = strArr.Length / 2;
+            for (int i = 0; i < pairs; i++)
+            {
+                long start = long.Parse(strArr[2 * i]);
+                long range = long.Parse(strArr[2 * i + 1]);
+                map.AddRange(start, range);
+            }
+            
+            return map;
+        }
+                
         public static int ReadSection(List<string> lines, int startPosition, string header, List<string> sections)
         {
             if (lines[startPosition] == header)
@@ -59,17 +77,7 @@ namespace Day_5___Seed_Maps
             }
             return map;
         }
-        public static long GetMapLocation(long source, Dictionary<long, long> map)
-        {
-
-            var location = source;
-            if (map.ContainsKey(source))
-            {
-                location = map[source];
-            }
-            return location;
-        }
-
+        
         public static long GetMapLocation(long source, SectionMap map)
         {
             return map.GetDestination(source);
