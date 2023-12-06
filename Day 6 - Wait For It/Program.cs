@@ -1,11 +1,14 @@
 ﻿using AdventofCode2023.Core;
+using AdventofCode2023;
 using System.Diagnostics;
 
 Console.WriteLine("Day 6 - Wait For It");
-var input = Utility.ReadProjectFile("input.txt");
 
 //Part 1
 var watch = Stopwatch.StartNew();
+var input = Utility.ReadProjectFile("input.txt");
+List<Race> races = RaceFactory.CreateRaces(input);
+
 
 
 
