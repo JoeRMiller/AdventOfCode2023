@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace AdventofCode2023
+namespace AdventofCode2023.Day6
 {
     public struct Race
     {
