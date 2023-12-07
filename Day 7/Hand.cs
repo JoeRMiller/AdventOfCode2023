@@ -8,9 +8,7 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode2023.Day7
 {
-
- 
-    public class Hand
+    public class Hand : IComparable<Hand>
     {
         public enum HandValue
         {
@@ -21,7 +19,6 @@ namespace AdventOfCode2023.Day7
             FullHouse = 4,
             FourOfAKind = 5,
             FiveOfAKind = 6,
-            Unknown = 7
         }
         public List<int> Cards { get; }
         public int Bid { get; }
@@ -39,7 +36,7 @@ namespace AdventOfCode2023.Day7
                 switch (c)
                 {
                     case 'A':
-                        this.Cards.Add(1);
+                        this.Cards.Add(14);
                         break;
                     case '2':
                         this.Cards.Add(2);
@@ -88,7 +85,7 @@ namespace AdventOfCode2023.Day7
             HandValue value;
             List<HandValue> values = [];
  
-            for (int i = 1; i <= 13; i++) 
+            for (int i = 2; i <= 14; i++) 
             {
                 var count = this.Cards.Where(c => c == i).Count();
 
@@ -140,6 +137,19 @@ namespace AdventOfCode2023.Day7
                 hands.Add(new Hand(item));
             }
             return hands;
+        }
+
+        public int CompareTo(Hand other)
+        {
+            if (other.Value > this.Value) { return -1; }
+            if (other.Value < this.Value) { return 1; }
+
+            for (int i = 0; i < 5; i++)
+            {
+                if (other.Cards[i] > this.Cards[i]) { return -1; }
+                if (other.Cards[i] < this.Cards[i]) { return 1; }
+            }
+            return 0;
         }
     }
 }

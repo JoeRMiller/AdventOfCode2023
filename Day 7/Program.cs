@@ -8,8 +8,15 @@ var watch = Stopwatch.StartNew();
 var input = Utility.ReadProjectFile("input.txt");
 
 List<Hand> hands = Hand.GetAllHands(input);
+hands.Sort();
 
-var result = 0;
+int winTotal = 0;
+for (int i = 0; i < hands.Count; i++)
+{
+    winTotal = winTotal + (hands[i].Bid * (i + 1));
+}
+
+var result = winTotal;
 watch.Stop();
 Console.WriteLine($"Ways to win product: {result}");
 Console.WriteLine($"Time: {watch.ElapsedMilliseconds}");
