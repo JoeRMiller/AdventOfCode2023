@@ -1,0 +1,43 @@
+﻿
+Reddit notes on this challenge
+
+The way the input is designed makes the LCM the correct answer. The input is itself part of the problem and very much in play. Nothing in the problem statement guarantees that any of this would be true, but all the provided inputs for this problem have special properties even if they were not explicitly spelled out:
+
+    Each --A node only reaches one --Z node in it's loop
+
+    they all reach their --Z at the same "step" in the directions every time, meaning the loops are all a consistent period instead of changing or branching
+
+    Conveniently the period it takes to reach the first --Z from the starting --A node is the same period as it takes to re-reach the --Z node when you're already there.
+
+I thought possible loops could be more complicated, like you said, by possibly reaching different end nodes in the same loop, reaching at different steps in the directions making uneven loops, having the first endpoint not be the same as the eventual loop, etc.
+
+I ended up manually verifying all those "nice" properties by collecting and printing some data on my input loops, which made it obvious that the input was of a specific kind and that I needed the LCM. Looking for patterns is generally a good strategy for any problems involving loops (and some not involving loops). If you can find the pattern, you can usually devise a way to a solve.
+
+You only have to solve for your specific input, not necessarily a generalized case. Inputs could have done any number of things, like eventually get caught in "dead ends" that don't loop back to a --Z node, or loop erratically over multiple --Z nodes, make uneven loops that don't match with the period of the direction length, have malformed entries, etc. Some of these possible cases would need different strategies to solve, maybe requiring a bruteforce, or maybe requiring an informed looping strategy like using the LCM or the Chinese Remainder Theorem, etc.
+
+--------------------------
+
+yeah.. LCM only works because the length of each cycle is exactly same with the first index that Z occurs in each cycles, which should not be expected necessarily.
+
+And the fact all inputs are built precisely to satisfy that specific requirement without mentioning it in the quiz is a bit annoying because all my additional works were completely useless after I solved the problem
+
+--------------------------
+
+Here, this might help make it clear:
+
+       o-----o       o-----o       o-----o
+       |     |   h   |     |   m   |     |
+------>|  A  +------>| ... +------>|  Z  |
+       |     |       |     |       |     |
+       o-----o       o-----o       o--+--o
+                        ^             |
+                        |      t      |
+                        o-------------o
+
+Each ghost starts at an "A" node, and goes some number of steps, h, until it reaches the head of the cycle. Then there's m steps in the middle until we reach a "Z" node, followed by the tail steps, t to return to the beginning of the cycle.
+
+So your cycle detection finds a cycle of length m + t. But if you look carefully at the steps, you'll see that the input is constructed so that there's only one "Z" node reached, and also that h = t. In other words, the time from the "A" node to the "Z" node is exactly the same as the cycle time. So you can ignore the time from "A" to the head of the cycle, and just focus on how often the cycles line up. Which, of course, is the LCM.
+
+--------------------------
+
+https://www.reddit.com/r/adventofcode/comments/18dfpub/2023_day_8_part_2_why_is_spoiler_correct/
