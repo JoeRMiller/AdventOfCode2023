@@ -19,7 +19,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day 6 - Wait For It", "Day 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day 7 - Camel Cards", "Day 7\Day 7 - Camel Cards.csproj", "{6DD9BE13-C8C4-4959-9B4F-33B61A390223}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day 8 - Haunted Wasteland", "Day 8 - Haunted Wasteland\Day 8 - Haunted Wasteland.csproj", "{C3DD35E3-2790-4AFE-B337-4741FAFF800F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day 8 - Haunted Wasteland", "Day 8 - Haunted Wasteland\Day 8 - Haunted Wasteland.csproj", "{C3DD35E3-2790-4AFE-B337-4741FAFF800F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FFFC294A-15F6-4B9C-9DFC-6D7169DAC38B}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.md = Readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
