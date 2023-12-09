@@ -18,13 +18,9 @@ For each list, calculate the extrapolated value =>
 ---
 ### Part 2
 #### Initial thoughts
-asd 
-asd
-asd
+Seems very similar to part 1, but instead of appending an extrapolation, we are pushing one on to the front of the list instead.
 
 ### Implementation
-asd
-asd
-asd
+Suprisingly simple for a part 2. Instead of appending the extrapolation to list, the extrapolation is inserted at 0. The extrapolation calculation is slightly different, but straightforward.
 
-#### Solution : XXXX
+#### Solution : 1041

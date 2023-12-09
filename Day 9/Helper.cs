@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,6 +9,17 @@ namespace AdventOfCode2023.Day9
 {
     public class Helper
     {
+        public static int ExtrapolateReverse(List<int> readings)
+        {
+            var filledTree = BuildTree(readings);
+            for (int i = filledTree.Count - 2; i > 0; i--)
+            {
+                var adder = filledTree[i].First();
+                var extrapolated = filledTree[i - 1].First() - adder;
+                filledTree[i - 1].Insert(0, extrapolated);
+            }
+            return filledTree[0].First();
+        }
         public static int ExtrapolateValue(List<int> readings) 
         {
             var filledTree = BuildTree(readings);

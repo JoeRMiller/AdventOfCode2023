@@ -32,10 +32,20 @@ Console.WriteLine($"Time: {watch.ElapsedMilliseconds}");
 
 //Part 2
 watch.Start();
-
-
-
 result = 0;
+List<List<int>> back = [];
+foreach (var line in input)
+{
+    string[] readings = line.Split(' ');
+    List<int> r = readings.Select(s => int.Parse(s)).ToList();
+    back.Add(r);
+}
+
+foreach (var r in back)
+{
+    result = result + Helper.ExtrapolateReverse(r);
+}
+
 watch.Stop();
 Console.WriteLine($"Answer: {result}");
 Console.WriteLine($"Time: {watch.ElapsedMilliseconds}");
