@@ -23,10 +23,10 @@ Implementation went accoring to plan.
 ---
 ### Part 2
 #### Initial thoughts
-
+Seems deceptively similar to part one. Will expand arrays 1000000 times instead of 1, and see what goes wrong.
 
 ### Implementation
+As per usual, the naive approach was *way* too computationally intensive. I redesigned the data structures so that space didnt actually expand, but instead the tile held the expansion value. When walkign the tiles to calculate a distance, I added the tile values, which would be large if they were part of an expansion. The overall map stated the same size as the original.
 
 
-
-#### Solution : 
+#### Solution : 550358864332
