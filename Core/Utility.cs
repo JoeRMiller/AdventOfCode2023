@@ -1,13 +1,12 @@
 ﻿namespace AdventofCode2023.Core
 {
-
     public class Tree<T>
     {
         public TreeNode<T> Root { get; private set; }
 
         public Tree(T rootValue)
         {
-            this.Root = new TreeNode<T>(rootValue); 
+            this.Root = new TreeNode<T>(rootValue);
         }
 
         public void PreFirstTraversal(TreeNode<T> node, Action<T> visit)
@@ -123,14 +122,11 @@
             visit(node.Value);
         }
     }
-
-        
     public class Utility
     {
         public static List<string> ReadProjectFile(string path)
         {
             return File.ReadAllLines($"..\\..\\..\\{path}").ToList();
         }
-
     }
 }
