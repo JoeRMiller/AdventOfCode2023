@@ -9,7 +9,7 @@
             this.Root = new TreeNode<T>(rootValue);
         }
 
-        public void PreFirstTraversal(TreeNode<T> node, Action<T> visit)
+        public void PreOrderTraversal(TreeNode<T> node, Action<T> visit)
         {
             if (node == null) return;
 
@@ -17,11 +17,11 @@
 
             foreach (var child in node.Nodes)
             {
-                PreFirstTraversal(child, visit);
+                PreOrderTraversal(child, visit);
             }
         }
 
-        public void PreFirstTraversal(TreeNode<T> node, Func<T, T> visit)
+        public void PreOrderTraversal(TreeNode<T> node, Func<T, T> visit)
         {
             if (node == null) return;
 
@@ -29,7 +29,7 @@
 
             foreach (var child in node.Nodes)
             {
-                PreFirstTraversal(child, visit);
+                PreOrderTraversal(child, visit);
             }
         }
 
@@ -74,7 +74,7 @@
             this.Nodes.Add(node);
         }
 
-        public void PreFirstTraversal(TreeNode<T> node, Action<T> visit)
+        public void PreOrderTraversal(TreeNode<T> node, Action<T> visit)
         {
             if (node == null) return;
 
@@ -82,11 +82,11 @@
 
             foreach (var child in node.Nodes)
             {
-                PreFirstTraversal(child, visit);
+                PreOrderTraversal(child, visit);
             }
         }
 
-        public void PreFirstTraversal(TreeNode<T> node, Func<T, T> visit)
+        public void PreOrderTraversal(TreeNode<T> node, Func<T, T> visit)
         {
             if (node == null) return;
 
@@ -94,7 +94,7 @@
 
             foreach (var child in node.Nodes)
             {
-                PreFirstTraversal(child, visit);
+                PreOrderTraversal(child, visit);
             }
         }
 
