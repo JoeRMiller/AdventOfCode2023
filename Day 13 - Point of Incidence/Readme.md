@@ -15,10 +15,12 @@ Went as planned
 ---
 ### Part 2
 #### Initial thoughts
-
+Now when comparing, on mismatches see if they are off by one. Fix one side and check for the mirror, then try fixing the other side.
 
 ### Implementation
+The instructions on this one were kind of unclear. The implementation was to search for identical lines, and if they werent, then check for off by one character lines.
+I just replaced the first instance of the mismatched character. I think the key was once a mismatch was found, thats the line. Score it, and dont bother with the other direction if it hasnt been checked.
+This code is a mess. I'll need to come back and clean it up, and see how much unecessary code there is.
 
-
-
-#### Solution :
+38642
+#### Solution : 39359
