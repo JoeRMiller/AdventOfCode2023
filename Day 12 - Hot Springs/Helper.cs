@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdventofCode2023.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,8 @@ namespace AdventOfCode2023.Day12
         public List<int> GroupSize { get; } = new List<int>();
         public int BrokenStrings { get; private set; }
         public int Arrangements { get; private set; }
+
+        
 
         
 
@@ -38,7 +41,7 @@ namespace AdventOfCode2023.Day12
         {
             this.BrokenStrings = this.GroupSize.Sum();
             ///find first possible broken group match
-            
+            return;
             foreach (var group in this.GroupSize)
             {
                 (int start, int end) = this.FindFirstNotOK(this.StatusLine, 0);
@@ -78,6 +81,20 @@ namespace AdventOfCode2023.Day12
 
     public static class Helper
     {
+
+        public static Tree<SpringLine> BuildTree(SpringLine input)
+        {
+            
+            Tree<SpringLine> tree = new Tree<SpringLine>(input);
+
+            //ProcessTreeNode, create new nodes for possible matches, add to current node.
+
+            return tree;
+        }
+        
+        
+        
+        
         public static List<SpringLine> GetSpringLines(List<string> input)
         {
             List<SpringLine> list = [];
@@ -86,6 +103,17 @@ namespace AdventOfCode2023.Day12
                 list.Add(new SpringLine(line));
             }
             return list;
+        }
+
+        public static string PrintStringline(SpringLine springLine)
+        {
+            //Console.WriteLine("In Action");
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"Status Line: {springLine.StatusLine}\n");
+            sb.Append($"Broken Group Count: {springLine.GroupSize.Count()}\n");
+            sb.Append($"Broken Springs: {springLine.BrokenStrings}\n");
+            sb.Append($"\n");
+            return sb.ToString();
         }
     }
 }
