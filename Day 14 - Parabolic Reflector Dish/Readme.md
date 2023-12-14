@@ -7,9 +7,10 @@ Plan is to build a 2 dimensional array of the dish, starting at the top (north),
 Iterate through the list of rows, and then add up the weight according to their distance from the bottom.
 
 ### Implementation
+Turns out I had to keep scanning rows until no more rocks moved. This is a bad algorithm. But the brute force methos worked.
+I have a bad feeling that part 2 will expose this weakness horribly.
 
-
-#### Solution :
+#### Solution : 108792
 ---
 ### Part 2
 #### Initial thoughts

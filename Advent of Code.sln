@@ -34,6 +34,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day 11", "Day 11\Day 11.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day 13", "Day 13 - Point of Incidence\Day 13.csproj", "{B2041EAF-E82B-4957-8C9D-2FDA596636CC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day 14 - Parabolic Reflector Dish", "Day 14 - Parabolic Reflector Dish\Day 14 - Parabolic Reflector Dish.csproj", "{544E02FC-A3DA-49C2-8D07-D01A3F5CDF39}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +94,10 @@ Global
 		{B2041EAF-E82B-4957-8C9D-2FDA596636CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2041EAF-E82B-4957-8C9D-2FDA596636CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2041EAF-E82B-4957-8C9D-2FDA596636CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{544E02FC-A3DA-49C2-8D07-D01A3F5CDF39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{544E02FC-A3DA-49C2-8D07-D01A3F5CDF39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{544E02FC-A3DA-49C2-8D07-D01A3F5CDF39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{544E02FC-A3DA-49C2-8D07-D01A3F5CDF39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

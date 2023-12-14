@@ -9,10 +9,15 @@ var watch = Stopwatch.StartNew();
 var input = Utility.ReadProjectFile("input.txt");
 //var input = Utility.ReadProjectFile("sample.txt");
 var result = 0;
+var dish = Utility.GetInputArray<char>(input);
+
+//Helper.PrintDish(dish);
+Helper.TiltDishNorth(dish);
+//Helper.PrintDish(dish);
+var weight = Helper.CalculateWeight(dish);
 
 
-
-
+result = weight;
 watch.Stop();
 Console.WriteLine($"Answer: {result}");
 Console.WriteLine($"Time: {watch.ElapsedMilliseconds}\n");
