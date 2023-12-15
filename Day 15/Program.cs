@@ -12,7 +12,7 @@ var result = 0;
 
 var hashList = Helper.GetHashList(input[0]);
 
-int total = hashList.Sum(hash => hash.Value);
+int total = hashList.Sum(hash => hash.WordHash);
 
 
 result = total;
@@ -25,8 +25,45 @@ Console.WriteLine($"Time: {watch.ElapsedMilliseconds}\n");
 watch.Start();
 result = 0;
 
+var boxes = Helper.GetBoxes();
 
+hashList = Helper.GetHashList(input[0]);
+foreach (var hash in hashList)
+{
+    //apply command to box
+    int box = hash.BoxHash;
+    var list = boxes[box];
 
+    if (hash.Operation == OperationEnum.Add)
+    {
+        if (list.Any(h => h.LensName == hash.LensName))
+        {
+            //Lens already exists, replace it
+            var index = list.FindIndex(h => h.LensName == hash.LensName);
+            list[index] = hash;
+        }
+        else
+        {
+            //Lens doesnt exist, add it
+            boxes[box].Add(hash);
+        }
+    }
+    else if (hash.Operation == OperationEnum.Remove)
+    {
+        if (list.Any(h => h.LensName == hash.LensName))
+        {
+            //Lens exists, remove it
+            var index = list.FindIndex(h => h.LensName == hash.LensName);
+            list.RemoveAt(index);
+        }
+    }
+    else
+    {
+        throw new InvalidDataException();
+    }
+}
+
+result = Helper.CalculateTotalLensPower(boxes);
 watch.Stop();
 Console.WriteLine($"Answer: {result}");
 Console.WriteLine($"Time: {watch.ElapsedMilliseconds}");

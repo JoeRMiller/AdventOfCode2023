@@ -21,9 +21,15 @@ Exactly as planned
 ### Part 2
 #### Initial thoughts
 
+	Alter the hash class to parse the command.
+	Calculate the box hash, and set the command type
+	Create a dictionary<int,Hash>
+	Process the hash list, and modify the boxes as commanded
+	Calculate the lens power of each box
+	Add up the powers.
 
 ### Implementation
+Exactly as planned
 
 
-
-#### Solution :
+#### Solution : 271384
