@@ -1,4 +1,7 @@
-﻿namespace AdventofCode2023.Core
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace AdventofCode2023.Core
 {
     public class Utility
     {
@@ -47,6 +50,28 @@
             }
 
             return (T)result;
+        }
+    }
+
+    public static class ListExtensions
+    {
+        public static List<T> SubList<T>(this List<T> list, int startIndex)
+        {
+            return list.SubList(startIndex, list.Count - startIndex);
+        }
+        public static List<T> SubList<T>(this List<T> list, int startIndex, int  endIndex)
+        {
+            if (list == null)
+            {
+                throw new ArgumentNullException(nameof(list));
+            }
+
+            if (startIndex < 0 || endIndex < 0 || startIndex > endIndex || endIndex >= list.Count)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            return list.GetRange(startIndex, endIndex - startIndex + 1);
         }
     }
 }
