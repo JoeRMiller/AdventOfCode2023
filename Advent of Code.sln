@@ -38,6 +38,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day 14 - Parabolic Reflecto
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day 15 - Lens Library", "Day 15\Day 15 - Lens Library.csproj", "{DF17CB6C-714F-4A48-ADF5-0AA4C0A539AE}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day 16", "Day 16\Day 16.csproj", "{9E46C20E-EA42-4845-BAB2-88CB694EEDD6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +106,10 @@ Global
 		{DF17CB6C-714F-4A48-ADF5-0AA4C0A539AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF17CB6C-714F-4A48-ADF5-0AA4C0A539AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF17CB6C-714F-4A48-ADF5-0AA4C0A539AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E46C20E-EA42-4845-BAB2-88CB694EEDD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E46C20E-EA42-4845-BAB2-88CB694EEDD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E46C20E-EA42-4845-BAB2-88CB694EEDD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E46C20E-EA42-4845-BAB2-88CB694EEDD6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
