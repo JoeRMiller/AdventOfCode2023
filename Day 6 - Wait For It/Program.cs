@@ -1,6 +1,7 @@
 ﻿using AdventofCode2023.Core;
 using AdventofCode2023;
 using System.Diagnostics;
+using AdventofCode2023.Day6;
 
 Console.WriteLine("Day 6 - Wait For It");
 
