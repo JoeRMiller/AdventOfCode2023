@@ -163,13 +163,6 @@ namespace AdventOfCode2023.Day14
 
         public static void SortColumn2(char[] column)
         {
-            //New approach, find runs between #'s, count the O's and just put that many at the front
-
-            //var stopIndexes = column.Select((value, index) => new { value, index })
-            //.Where(x => x.value == '#')
-            //.Select(x => x.index)
-            //.ToList();
-
             List<int> stopIndexes = [];
             for (int i = 0; i < column.Length; i++)
             {
@@ -194,10 +187,6 @@ namespace AdventOfCode2023.Day14
                     }
                 }
 
-                //rocks = column.Skip(start)
-                //                  .Take(index - 1)
-                //                  .Count(x => x == 'O');
-                
                 //Put the rocks at the beginning
                 for (int i = 0; i < rocks ; i++)
                 {
@@ -290,24 +279,31 @@ namespace AdventOfCode2023.Day14
             return count;
         }
 
-        public static List<int> CalculatePositionFromRepeats(List<int> weightSequence, Dictionary<int, int> weights, int iterations)
+        public static int CalculatePositionFromRepeats(List<int> weightSequence, Dictionary<int, int> weights, int iterations)
         {
             List<int> sequence = [];
 
+            //Figure out which weights are part of the repeated sequence, and which are not.
+            //Idea is that given enough iterations, the count of repeated weights will be much larger than the non repeated sequence weights.
+            //To divide the groups, we take the mean of the times each weight appears in the list.
+            //  Then calculate the standard deviation, and discard the weights that show up less than that.
+            //This alomst certainly isnt the right algorith for this, but I don't know how else to separate the groups.
             int weightCountSum = weights.Values.Sum();
             int weightsCount = weights.Keys.Count();
             double meanWeightCount = weightCountSum / weightsCount;
             double stdev = Math.Sqrt(weights.Values.Sum(x => Math.Pow(x - meanWeightCount, 2)) / weights.Values.Count());
             int lowWeight = Convert.ToInt32(meanWeightCount - stdev);
 
-
+            //Select only the highly repeated weights from the full list of weights.
+            //This size of this list will be the initial window size for searching the list space for repeated sequences.
             var repeatMembers = weights.Where(x => x.Value > lowWeight).Select(y => y.Key).ToList();
-//            var repeatMembers = weights.Where(x => x.Value > ).Select(y => y.Key).ToList();
+            var repeatMembersCount = repeatMembers.Count;
 
-            //Brute force the damn thing
-            //Find last instance of weight not in sequence member list
+            //Find last instance of a weight not in sequence member list
+            //All weights prior to this one will be trimmed from the full list.
+            //The rest of the weight sequence will be the search space
             int last = 0;
-            for (int i = 0; i < repeatMembers.Count; i++)
+            for (int i = 0; i < repeatMembersCount; i++)
             {
                 if (!repeatMembers.Contains(weightSequence[i]))
                 {
@@ -315,115 +311,110 @@ namespace AdventOfCode2023.Day14
                     continue;
                 }
             }
-            //int searchStartPosition = last + 1;
-            Console.WriteLine($"Last non member weight is {weightSequence[last]} at {last + 1}");
+            var fullSearchSequence = weightSequence.SubList(last + 1);
+            //Console.WriteLine($"Last non member weight is {weightSequence[last]} at {last + 1}");
 
-            //start checking lists of length member count and up
-            //build 
-            //start at first member position
-            //check all sample lists
-            //increase sample list size, and check again
-
-
-
-
-            //For each first member position on
-            //build sample list
-            //check all ranges
-            //if repeat found,
-            //exit loop, noting sample list and match position
-            //else
-            //increase sample length
-            //repeat
-
-            //build sample list
-            //check all ranges
-            //if match found
-            //exit loop, noting sample list and match position
-            //else
-            //move the start forward 1 spot
-
-            //increase sample length
-            //repeat
+            //The maximum size of a repeated sequence is half of the search space.
+            //Start building search blocks using the size of the repeated members list.
+            List<int> repeatingSequence = [];
+            bool isMatch = false;
+            int matchIndex = -1;
+            var maxSearchSequenceLength = fullSearchSequence.Count / 2;
             
-
-            var searchList = weightSequence.SubList(last + 1); 
-
-           //This will increase with each full search iteration
-            int windowLength = repeatMembers.Count;
-            int lastRangeSearchPosition = searchList.Count - repeatMembers.Count;
-            bool foundMatch = false;
-            int matchPosition = 0;
-            List<int> sample = [];
-
-            //For each first member position on
-            for (int x = 0; x < lastRangeSearchPosition; x++)
+            //For smallest window size to max window size
+            for (int windowSize = repeatMembersCount; windowSize <= maxSearchSequenceLength; windowSize++)
             {
-                //build sample list
-                sample = [];
-                for (int j = x; j < x + windowLength; j++)
+                //Console.WriteLine($"Window size:{windowSize}");
+                //for 0 to sequence end - window size
+                for (int searchWindowIndex = 0; searchWindowIndex < fullSearchSequence.Count - windowSize; searchWindowIndex++)
                 {
-                    sample.Add(searchList[j]);
-                }
+                    //Build the search window of length searchSequenceLength
+                    List<int> searchWindow = [];
+                    //searchWindow = fullSearchSequence.SubList<int>(searchWindowIndex, searchWindowIndex + searchSequenceIndex - 1);
+                    searchWindow = fullSearchSequence.SubList<int>(searchWindowIndex, searchWindowIndex + windowSize - 1);
 
-
-                //Here we have the trimmed weight list.
-                var rangeStart = 0 /*searchStartPosition*/;
-
-
-                for (int y = rangeStart; y <= lastRangeSearchPosition - x/* - rangeStart - windowLength*/; y++)
-                {
-                    int endPosition = lastRangeSearchPosition - y - windowLength;
-                    for (int i = rangeStart + windowLength + y; i <= endPosition; i = i + windowLength)
+                    //Now we have a search window, which we will slide along until we would repeat the same window in the full sequence
+                    int windowSlides = searchWindow.Count - 1;
+                    for (int slideIteration = 0; slideIteration < windowSlides; slideIteration++)
                     {
-                        //Starting at last member found position, build sequences starting with member list size.
-                        var testSequence = searchList.SubList(i, i + windowLength - 1);
-                        if (testSequence.SequenceEqual(sample))
-                        //if (weightSequence.Where((item, index) => index <= weightSequence.Count - sample.Count)
-                        //                      .Any(index => weightSequence.Skip(index).Take(sample.Count).SequenceEqual(sample)))
+                        int matchCount = 0;
+                        int timesToSearch = (fullSearchSequence.Count - searchWindow.Count - slideIteration) / searchWindow.Count;
+                        isMatch = false;
+                        matchIndex = -1;
+                        for (int i = 0; i < timesToSearch; i++)
                         {
-                            Console.WriteLine("Found Match");
-                            foundMatch = true;
-                            matchPosition = y /*+ searchStartPosition*/;
-                            //break;
+                            var startIndex = (i + 1) * searchWindow.Count + slideIteration;
+                            var endIndex = startIndex + searchWindow.Count;
+                            var testSequence = fullSearchSequence.SubList<int>(startIndex, endIndex - 1);
+                            //if (testSequence.Equals(searchWindow))
+                            if (IsEqual(testSequence, searchWindow))
+                            {
+                                //Found a match. Every subsequent comparison must also match for this to be a repeating sequence window
+                                isMatch = true;
+                                //Set the index for where the repeating section started
+                                if (matchCount == 0)
+                                {
+                                    matchIndex = (slideIteration + ((i + 1) * searchWindow.Count)) - searchWindow.Count;
+                                }
+                                
+                                matchCount++;
+                                if (slideIteration == windowSlides - 1)
+                                {
+                                    isMatch = false;
+                                }
+                            }
+                            else if (isMatch)
+                            {
+                                //Here we had found a matching sequence window, but a subsequent window failed. This isn't a repeating pattern
+                                //Quit searching from this sequence start location
+                                isMatch = false;
+                                matchCount = 0;
+                                break;
+                            }
                         }
-                        else if (foundMatch)
+                        //Here we have completed a slide iteration. If isMatch is true, we found our repeating sequence
+                        //The start of the repeating sequence is held in matchIndex.
+                        //This is relative to the trimmed full search sequence, not the complete weights sequence
+                        if (isMatch && matchCount > 1)
                         {
-                            //Here we have found an initial match, but subsequent matches failed
-                            Console.WriteLine("False Match");
-                            foundMatch = false;
+                            //Should be all done
+                            break;
                         }
                     }
-                    if (foundMatch)
+                    //If we have a mnatch here, quit the loop
+                    if (isMatch)
                     {
+                        //Should be all done
+                        repeatingSequence = searchWindow;
                         break;
                     }
-                }                
-                if (foundMatch)
+                }
+                if (isMatch)
                 {
+                    //Should be all done
+                    
                     break;
                 }
-                windowLength++;
+
             }
-            Console.WriteLine($"Sequence starts at {matchPosition}");
-            foreach (var s in sample)
+            int leading = last + 1;
+            
+            int rem = iterations - (matchIndex + leading);
+            int weight = rem % repeatingSequence.Count;
+           
+            return repeatingSequence[weight - 1];
+        }
+
+        private static bool IsEqual(List<int> a, List<int> b)
+        {
+            for (int i = 0; i<a.Count; i++)
             {
-                Console.Write($"{s} ");
+                if (a[i] != b[i])
+                {
+                    return false;
+                }
             }
-            Console.WriteLine();
-
-            int result = (iterations - matchPosition - 1) % sample.Count;
-            Console.WriteLine(result);
-
-
-
-            //Start at the weight value after the last, and start looking for repeats with growing list lengths. Start with the length of the members list
-            
-
-            
-
-
-            return sequence;
+            return true;
         }
     }
 }

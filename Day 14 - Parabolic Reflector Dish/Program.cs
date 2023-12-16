@@ -6,12 +6,13 @@ Console.WriteLine("Advent of Code Day 14 - Parabolic Reflector Dish");
 
 //Part 1
 var watch = Stopwatch.StartNew();
-//var input = Utility.ReadProjectFile("input.txt");
-var input = Utility.ReadProjectFile("sample.txt");
+var input = Utility.ReadProjectFile("input.txt");
+//var input = Utility.ReadProjectFile("sample.txt");
 var result = 0;
 var dish = Utility.GetInputArray<char>(input);
 
-var reps = 27;
+var reps = 10000;
+var actualReps = 1000000000;
 
 //Helper.PrintDish(dish);
 Helper.TiltDishNorth(dish);
@@ -67,13 +68,14 @@ for (int x = 0; x < reps; x++)
     {
         weightData.Add(weight, 1);
     }
-    Console.WriteLine($"{weight}\t{x}");
+    //Console.WriteLine($"{weight}\t{x}");
 }
+Console.WriteLine("Done Tilting");
 //Helper.PrintDish(dish);
 //Console.WriteLine($"Iterations:{iterations}");
 
 
-
+/*
 foreach (var w in weightData.Keys)
 {
     if (weightData[w] > 20)
@@ -81,10 +83,9 @@ foreach (var w in weightData.Keys)
         Console.WriteLine($"Weight:{w} Times:{weightData[w]}");
     }
 }
+*/
+result = Helper.CalculatePositionFromRepeats(weights, weightData, actualReps);
 
-var list = Helper.CalculatePositionFromRepeats(weights, weightData, 15);
-
-result = weight;
 watch.Stop();
 Console.WriteLine($"Answer: {result}");
 Console.WriteLine($"Time: {watch.ElapsedMilliseconds}");
