@@ -1,6 +1,7 @@
 ﻿using AdventofCode2023.Core;
 using AdventOfCode2023.Day16;
 using System.Diagnostics;
+using System.Numerics;
 
 Console.WriteLine("Advent of Code Day 16 - The Floor Will Be Lava");
 
@@ -24,7 +25,7 @@ Console.WriteLine($"Time: {watch.ElapsedMilliseconds}\n");
 watch.Start();
 result = 0;
 
-
+result = Helper.TraverseFromAllEdges(charMap);
 
 watch.Stop();
 Console.WriteLine($"Answer: {result}");

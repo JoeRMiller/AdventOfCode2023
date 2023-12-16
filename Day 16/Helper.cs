@@ -71,6 +71,62 @@ namespace AdventOfCode2023.Day16
             return map;
         }
 
+        public static int TraverseFromAllEdges(char[][] charMap)
+        {
+            var max = 0;
+
+            //From the left
+            for (int x = 0; x < charMap.Count(); x++)
+            {
+                Tile[][] map = BuildMap(charMap);
+                TraverseMap(map, x, 0, Direction.Right);
+                var energized = CountEnergized(map);
+                if (energized > max)
+                {
+                    max = energized;
+                }
+            }
+
+            //From the right
+            for (int x = 0; x < charMap.Count(); x++)
+            {
+                Tile[][] map = BuildMap(charMap);
+                TraverseMap(map, x, charMap.Count() - 1, Direction.Left);
+                var energized = CountEnergized(map);
+                if (energized > max)
+                {
+                    max = energized;
+                }
+            }
+
+            //From the Top
+            for (int x = 0; x < charMap[0].Count(); x++)
+            {
+                Tile[][] map = BuildMap(charMap);
+                TraverseMap(map, 0, x, Direction.Down);
+                var energized = CountEnergized(map);
+                if (energized > max)
+                {
+                    max = energized;
+                }
+            }
+
+            //From the Bottom
+            for (int x = 0; x < charMap[0].Count(); x++)
+            {
+                Tile[][] map = BuildMap(charMap);
+                TraverseMap(map, charMap[0].Count()-1, x, Direction.Up);
+                var energized = CountEnergized(map);
+                if (energized > max)
+                {
+                    max = energized;
+                }
+            }
+
+
+            return max;
+        }
+
         public static void TraverseMap(Tile[][] map, int startRow, int startCol, Direction direction)
         {
             //Energize tile

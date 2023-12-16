@@ -16,10 +16,10 @@ Pretty much exactly as I thought.
 ---
 ### Part 2
 #### Initial thoughts
-
+Now that the beam can start from any edge position, instead of just the top left corner, I think I just have to add some extra logic to the code that starts the traveral.
 
 ### Implementation
+My initial thought was right. The way I built part 1 made adapting to part 2 almost trivial.
 
 
-
-#### Solution :
+#### Solution : 8089
