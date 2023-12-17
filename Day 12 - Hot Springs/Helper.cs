@@ -141,12 +141,9 @@ namespace AdventOfCode2023.Day12
     {
         public static List<SpringLine> GetSpringLines(List<string> input)
         {
-            List<SpringLine> list = [];
-            foreach (var line in input)
-            {
-                list.Add(new SpringLine(line));
-            }
-            return list;
+            return input.AsParallel()
+                        .Select(str => new SpringLine(str))
+                        .ToList();
         }
 
         public static string PrintStringline(SpringLine springLine)
