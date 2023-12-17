@@ -1,4 +1,6 @@
-﻿namespace AdventofCode2023.Core
+﻿using System.Text;
+
+namespace AdventofCode2023.Core
 {
     public class Tree<T>
     {
@@ -127,6 +129,16 @@
         public static List<string> ReadProjectFile(string path)
         {
             return File.ReadAllLines($"..\\..\\..\\{path}").ToList();
+        }
+    }
+
+    public static class StringExtensions
+    {
+        public static string ReplaceCharAt(this string input, char replacement, int index)
+        {
+            StringBuilder sb = new StringBuilder(input);
+            sb[index] = replacement;
+            return sb.ToString();
         }
     }
 }

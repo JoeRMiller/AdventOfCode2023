@@ -8,9 +8,10 @@ My first thought is to use a tree structure to test fitting groupings into possi
 
 
 ### Implementation
+My first though was completely wrong. The solution was to brute force all combinations and compare to a regex.
+Runs in 31 seconds
 
-
-#### Solution :
+#### Solution : 7506
 ---
 ### Part 2
 #### Initial thoughts

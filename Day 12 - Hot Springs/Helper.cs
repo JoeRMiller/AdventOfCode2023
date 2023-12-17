@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace AdventOfCode2023.Day12
@@ -10,91 +11,134 @@ namespace AdventOfCode2023.Day12
     public class SpringLine
     {
         public string StatusLine { get; private set; } = string.Empty;
-        public List<int> GroupSize { get; } = new List<int>();
+        public List<int> Groups { get; } = new List<int>();
         public int BrokenStrings { get; private set; }
         public int Arrangements { get; private set; }
+        public List<bool> IsUnknown { get; private set; }
 
-        
+        private string _regex;
+        private Dictionary<string, bool> Matches;
 
-        
 
-        public SpringLine(string input) 
+
+
+
+        public SpringLine(string input)
         {
-            this.GroupSize = [];
+            this.Groups = [];
+            this.IsUnknown = [];
+            this.Matches = [];
+            this.Arrangements = 0;
             this.ParseInput(input);
+            this.ParseStatusLine();
+            this.BuildRegexPattern();
             this.CalculateArrangements();
         }
 
         private void ParseInput(string input)
         {
-            var splits = input.Split(' ');;
+            var splits = input.Split(' '); ;
             this.StatusLine = splits[0];
 
             var groups = splits[1].Split(',');
             foreach (var group in groups)
             {
-                this.GroupSize.Add(int.Parse(group));
+                this.Groups.Add(int.Parse(group));
             }
+        }
+
+        private void ParseStatusLine()
+        {
+            foreach (var chr in this.StatusLine)
+            {
+                if (chr == '?')
+                {
+                    this.IsUnknown.Add(true);
+                }
+                else
+                {
+                    this.IsUnknown.Add(false);
+                }
+            }
+        }
+
+        private void BuildRegexPattern()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("^\\.*");
+            for (int x = 0; x < this.Groups.Count; x++)
+            {
+                sb.Append('(');
+                for (int i = 0; i < this.Groups[x]; i++)
+                {
+                    sb.Append("\\#");
+                }
+                sb.Append(')');
+                if (x < this.Groups.Count - 1)
+                {
+                    sb.Append("\\.+");
+                }
+            }
+            sb.Append("(?!.*\\#)");
+            _regex = sb.ToString();
         }
 
         private void CalculateArrangements()
         {
-            this.BrokenStrings = this.GroupSize.Sum();
-            ///find first possible broken group match
-            return;
-            foreach (var group in this.GroupSize)
-            {
-                (int start, int end) = this.FindFirstNotOK(this.StatusLine, 0);
-                //Does current group fit?
-                
-            }
+            this.BrokenStrings = this.Groups.Sum();
+
+            //Get list of all unknown indices
+            var unknowns = this.StatusLine.Select((character, index) => new { character, index })
+                                          .Where(x => x.character == '?')
+                                          .Select(x => x.index)
+                                          .ToList();
+
+            string updated = this.StatusLine.ReplaceCharAt('#', unknowns[0]);
+            updated = updated.Replace('?', '.');
+            CheckMatch(updated, 0, unknowns);
+
+            updated = this.StatusLine.ReplaceCharAt('.', unknowns[0]);
+            updated = updated.Replace('?', '.');
+            CheckMatch(updated, 0, unknowns);
         }
 
-        private Tuple<int, int> FindFirstNotOK(string springLine, int startPos)
+        //Index is where we are starting the recursive checking
+        private void CheckMatch(string line, int index, List<int> indices)
         {
-            bool inGroup = false;
-            bool foundGroup = false;
-            int start = 0;
-            int end = 0;
-            int position = startPos;
-            do
+            if (!this.Matches.ContainsKey(line))
             {
-                if ((springLine[position] != '.') && (!inGroup))
+                Regex r = new Regex(_regex);
+                var matches = r.Matches(line);
+                bool match = true;
+                if (matches.Count == 1)
                 {
-                    //Found first possibly broken spring
-                    start = position;
-                    inGroup = true;
+                    //Have a regex match
+                    if (matches[0].Groups.Count - 1 == this.Groups.Count)
+                    {
+                        this.Arrangements++;
+                    }
                 }
-                else if ((springLine[position] == '.') && (inGroup))
-                {
-                    //Found first functional spring since starting a potential bad spring grouping
-                    end = position - 1;
-                    inGroup = false;
-                    foundGroup = true;
-                }
-                position++;
+                this.Matches.Add(line, true);
             }
-            while (!foundGroup);
-            return Tuple.Create(start, end);
+
+            //Set up the next check
+            int nextIndex = index + 1;
+            if (nextIndex != indices.Count)
+            {
+                //more to test
+                string updated = line.ReplaceCharAt('#', indices[nextIndex]);
+                updated = updated.Replace('?', '.');
+                CheckMatch(updated, nextIndex, indices);
+
+                updated = line.ReplaceCharAt('.', indices[nextIndex]);
+                updated = updated.Replace('?', '.');
+                CheckMatch(updated, nextIndex, indices);
+            }
         }
     }
 
     public static class Helper
     {
-
-        public static Tree<SpringLine> BuildTree(SpringLine input)
-        {
-            
-            Tree<SpringLine> tree = new Tree<SpringLine>(input);
-
-            //ProcessTreeNode, create new nodes for possible matches, add to current node.
-
-            return tree;
-        }
-        
-        
-        
-        
         public static List<SpringLine> GetSpringLines(List<string> input)
         {
             List<SpringLine> list = [];
@@ -110,7 +154,7 @@ namespace AdventOfCode2023.Day12
             //Console.WriteLine("In Action");
             StringBuilder sb = new StringBuilder();
             sb.Append($"Status Line: {springLine.StatusLine}\n");
-            sb.Append($"Broken Group Count: {springLine.GroupSize.Count()}\n");
+            sb.Append($"Broken Group Count: {springLine.Groups.Count()}\n");
             sb.Append($"Broken Springs: {springLine.BrokenStrings}\n");
             sb.Append($"\n");
             return sb.ToString();
